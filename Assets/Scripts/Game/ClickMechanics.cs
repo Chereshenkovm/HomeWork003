@@ -9,6 +9,8 @@ public class ClickMechanics : MonoBehaviour
     [SerializeField] private MainMechanics _main;
     [SerializeField] private GameObject EffectIcon1;
     [SerializeField] private GameObject EffectIcon2;
+    [SerializeField] private ParticleSystem ps;
+    [SerializeField] private ParticleSystem ps2;
     
     [Header("Количество набранных очков")]
     private Game.Points _Points;
@@ -62,7 +64,9 @@ public class ClickMechanics : MonoBehaviour
     {
         Time.timeScale = 0.5f;
         EffectIcon1.SetActive(true);
+        ps.Play();
         yield return new WaitForSeconds(5f);
+        ps.Stop();
         EffectIcon1.SetActive(false);
         Time.timeScale = 1;
     }
@@ -71,7 +75,9 @@ public class ClickMechanics : MonoBehaviour
     {
         PointsMultip = 2;
         EffectIcon2.SetActive(true);
+        ps2.Play();
         yield return new WaitForSeconds(5f);
+        ps2.Stop();
         EffectIcon2.SetActive(false);
         PointsMultip = 1;
     }

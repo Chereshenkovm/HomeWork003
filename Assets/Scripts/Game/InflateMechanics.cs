@@ -33,6 +33,8 @@ public class InflateMechanics : MonoBehaviour
     private eyeTypes _eyeType;
     [SerializeField] private GameObject _particleOb;
 
+    private bool apQuit = false;
+    
     private float inflateSpeed = 0;
     private float destroyTime = 1.0F;
 
@@ -86,10 +88,18 @@ public class InflateMechanics : MonoBehaviour
 
     }
 
+    private void OnApplicationQuit()
+    {
+        apQuit = true;
+    }
+
     private void OnDestroy()
     {
-        var  _pO = Instantiate(_particleOb, transform.position, Quaternion.identity);
-        _pO.GetComponent<ParticleSystemDestroy>().StartCor(transform.localScale.x);
+        if (!apQuit)
+        {
+            var _pO = Instantiate(_particleOb, transform.position, Quaternion.identity);
+            _pO.GetComponent<ParticleSystemDestroy>().StartCor(transform.localScale.x);
+        }
     }
 
     private void FixedUpdate()
@@ -97,22 +107,6 @@ public class InflateMechanics : MonoBehaviour
         transform.localScale += transform.localScale.normalized*inflateSpeed;
         upTime = Time.time - startTime;
     }
-
-    /* Destroy()
-    {
-        ps = GetComponent<ParticleSystem>();
-        ps.Stop();
-        var main = ps.emission;
-        
-        main.SetBursts(
-            new ParticleSystem.Burst[]
-            {
-                new ParticleSystem.Burst(0.0f, 100),
-            });
-        ps.Play();
-        Debug.Log(0);
-        yield return new WaitForSeconds(1f);
-    }*/
 
     private void GenerateEyeType()
     {

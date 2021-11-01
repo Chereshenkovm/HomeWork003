@@ -26,6 +26,7 @@ namespace Game
         [SerializeField] private SettingsWindow _settingsWindow;
         [SerializeField] private InstructionWindow _instructionWindow;
         [SerializeField] private ChooseGameWindow _chooseGameWindow;
+        [SerializeField] private GameOverScreenWin _gameOverScreen;
 
         [Header("Время игры")] 
         public int _time = 60;
@@ -96,6 +97,18 @@ namespace Game
             _chooseGameWindow.OnChooseGame3 += () =>
             {
                 _chooseGameWindow.gameObject.SetActive(false);
+            };
+
+            _gameOverScreen.SetPoints += () =>
+            {
+                _gameOverScreen.SetHighScore(_points.points);
+            };
+
+            _gameOverScreen.OnClose += () =>
+            {
+                _gameOverScreen.SetInteract();
+                _gameOverScreen.gameObject.SetActive(false);
+                _startWindow.gameObject.SetActive(true);
             };
         }
 

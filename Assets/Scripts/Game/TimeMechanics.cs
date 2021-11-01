@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TimeMechanics : MonoBehaviour
 {
-    [SerializeField] private GameObject _startMenu;
+    [SerializeField] private GameObject _gameOverMenu;
     
     [Header("Пройденное время с начала игры")]
     public int _time;
@@ -39,7 +39,7 @@ public class TimeMechanics : MonoBehaviour
             {
                 gameObject.GetComponent<MainMechanics>().StopTheGame();
                 Debug.Log("Game Over");
-                _startMenu.SetActive(true);
+                _gameOverMenu.SetActive(true);
             }
 
             yield return new WaitForSeconds(1f);
