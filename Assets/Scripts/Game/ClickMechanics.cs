@@ -1,43 +1,78 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using Game;
 using UnityEngine;
 
 public class ClickMechanics : MonoBehaviour
 {
-    [Header("Количество набранных очков")]
-    public int points = 0;
+    [SerializeField] private SpawnBehaviour _spawner;
+    [SerializeField] private MainMechanics _main;
+    [SerializeField] private GameObject EffectIcon1;
+    [SerializeField] private GameObject EffectIcon2;
+    
+    [Header("РљРѕР»РёС‡РµСЃС‚РІРѕ РЅР°Р±СЂР°РЅРЅС‹С… РѕС‡РєРѕРІ")]
+    private Game.Points _Points;
 
     private Vector2 mousePos;
     private RaycastHit2D hitObject;
+    private int PointsMultip = 1;
 
-    private Dictionary<Vector2, bool> fullDictionary;
-
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        fullDictionary = GetComponent<MainMechanics>().fullDictionary;
+        _Points = _main._points;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
             hitObject = Physics2D.Raycast(mousePos, Vector2.zero);
             if (hitObject)
             {
                 if (hitObject.collider.gameObject.name == "Eye")
                 {
-                    points += hitObject.collider.GetComponent<InflateMechanics>().GetPoints();
-                    fullDictionary[(Vector2)hitObject.collider.transform.parent.position] = false;
+                    _Points.points += PointsMultip *
+                                      hitObject.collider.GetComponent<InflateMechanics>().GetPoints(mousePos);
+                    _spawner.clearSpawnPoint((Vector2) hitObject.collider.transform.parent.position);
                     Destroy(hitObject.collider.transform.parent.gameObject);
+                }
+
+                if (hitObject.collider.gameObject.tag == "AxeFreeze")
+                {
+                    if(!EffectIcon1.activeSelf)
+                        StartCoroutine(timeSlow());
+                    Destroy(hitObject.collider.gameObject);
+                }
+                else if (hitObject.collider.gameObject.tag == "AxeMult")
+                {
+                    if(!EffectIcon2.activeSelf)
+                        StartCoroutine(pointsDoubled());
+                    Destroy(hitObject.collider.gameObject);
                 }
             }
             else
             {
-                points += -50;
+                _Points.points += -50;
             }
         }
+    }
+
+    IEnumerator timeSlow()
+    {
+        Time.timeScale = 0.5f;
+        EffectIcon1.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        EffectIcon1.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    IEnumerator pointsDoubled()
+    {
+        PointsMultip = 2;
+        EffectIcon2.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        EffectIcon2.SetActive(false);
+        PointsMultip = 1;
     }
 }

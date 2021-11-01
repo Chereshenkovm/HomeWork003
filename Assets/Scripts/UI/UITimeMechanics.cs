@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class UITimeMechanics : MonoBehaviour
 {
-    private int time = 0;
     private Text _text;
     private TimeMechanics CM;
 

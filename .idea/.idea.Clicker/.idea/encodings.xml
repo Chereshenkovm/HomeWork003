@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Game/InflateMechanics.cs" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Game/MainMechanics.cs" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Game/SpawnBehaviour.cs" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Game/TimeMechanics.cs" charset="windows-1251" />
   </component>
 </project>

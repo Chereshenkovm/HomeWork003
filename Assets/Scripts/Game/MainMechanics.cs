@@ -1,52 +1,144 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpawnBehaviour))]
-[RequireComponent(typeof(ClickMechanics))]
-[RequireComponent(typeof(TimeMechanics))]
-public class MainMechanics : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private Camera mainCamera;
-
-    [Header("Число строк и столбиков")]
-    public int numberOfRows = 2;
-    public int numberOfCollumns = 4;
-    [Header("Координаты спаунов")]
-    public Vector2[] spawnPoints;
-
-    public Dictionary<Vector2, bool> fullDictionary;
-
-    private Vector2 screenCoords;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public class Points
     {
-        screenCoords = (Vector2)mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        public int points;
 
-        spawnPoints = new Vector2[numberOfRows * numberOfCollumns];
-        fullDictionary = new Dictionary<Vector2, bool>();
-
-        for (int i = 0; i < numberOfRows; i++)
+        public Points()
         {
-            for (int j = 0; j < numberOfCollumns; j++)
-            {
-                spawnPoints[i * numberOfCollumns + j] = new Vector2((float)(2 * j + 1) / (numberOfCollumns * 2) * screenCoords.x * 2 - screenCoords.x, (float)(2 * i + 1) / (numberOfRows * 2) * screenCoords.y * 2 - screenCoords.y);
-                fullDictionary.Add(spawnPoints[i * numberOfCollumns + j], false);
-            }
+            points = 0;
         }
     }
 
-    private void Awake()
-    {
-        Debug.Log("Правила игры:\n Зелёные глаза от 0 до 100 очков,\n Жёлтые глаза от 100 до 200 очков,\n Красные глаза от 200 до 400 очков,\n Глаза бомбы забирают 1000 очков,\n Промах забирает 50 очков,\n Чем быстрее нажимается глаз, тем больше очков получается.");
-    }
 
-    public void StartTheGame()
+    [RequireComponent(typeof(SpawnBehaviour))]
+    [RequireComponent(typeof(ClickMechanics))]
+    [RequireComponent(typeof(TimeMechanics))]
+    public class MainMechanics : MonoBehaviour
     {
-        gameObject.GetComponent<SpawnBehaviour>().enabled = true;
-        gameObject.GetComponent<ClickMechanics>().enabled = true;
-        gameObject.GetComponent<TimeMechanics>().enabled = true;
+        [Header("Окна UI")]
+        [SerializeField] private StartWindow _startWindow;
+        [SerializeField] private SettingsWindow _settingsWindow;
+        [SerializeField] private InstructionWindow _instructionWindow;
+        [SerializeField] private ChooseGameWindow _chooseGameWindow;
+
+        [Header("Время игры")] 
+        public int _time = 60;
+        [Header("Число строк и столбиков")]
+        public int numberOfRows = 2;
+        public int numberOfCollumns = 4;
+
+        public Points _points = new Points();
+
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            _startWindow.QuitEvent += () =>
+            {
+                Application.Quit();
+            };
+
+            _startWindow.StartEvent += () =>
+            {
+                _startWindow.gameObject.SetActive(false);
+                _chooseGameWindow.gameObject.SetActive(true);
+            };
+
+            _startWindow.SettingsEvent += () =>
+            {
+                _startWindow.gameObject.SetActive(false);
+                _settingsWindow.gameObject.SetActive(true);
+                _settingsWindow.SetTimeRC(_time.ToString(), numberOfRows, numberOfCollumns);
+            };
+
+            _startWindow.InstrEvent += () =>
+            {
+                _startWindow.gameObject.SetActive(false);
+                _instructionWindow.gameObject.SetActive(true);
+            };
+
+            _settingsWindow.CloseSet += () =>
+            {
+                CloseWindow();
+            };
+
+            _settingsWindow.OnApply += (t,R,C) =>
+            {
+                _time = Int32.Parse(t);
+                numberOfCollumns = C;
+                numberOfRows = R;
+                CloseWindow();
+            };
+
+            _instructionWindow.OnCloseWindow += () =>
+            {
+                _instructionWindow.gameObject.SetActive(false);
+                _startWindow.gameObject.SetActive(true);
+            };
+
+            _chooseGameWindow.OnChooseGame1 += () =>
+            {
+                _chooseGameWindow.gameObject.SetActive(false);
+                StartTheGame();
+            };
+            
+            _chooseGameWindow.OnChooseGame2 += () =>
+            {
+                _chooseGameWindow.gameObject.SetActive(false);
+            };
+            
+            _chooseGameWindow.OnChooseGame3 += () =>
+            {
+                _chooseGameWindow.gameObject.SetActive(false);
+            };
+        }
+
+        private void Awake()
+        {
+            if (PlayerPrefs.HasKey("Game Time"))
+            {
+                _time = PlayerPrefs.GetInt("Game Time");
+                numberOfRows = PlayerPrefs.GetInt("NumberOfRows");
+                numberOfCollumns = PlayerPrefs.GetInt("NumberOfCols");
+            }
+        }
+
+        private void OnApplicationQuit()
+        {
+            PlayerPrefs.SetInt("Game Time", _time);
+            PlayerPrefs.SetInt("NumberOfRows", numberOfRows);
+            PlayerPrefs.SetInt("NumberOfCols", numberOfCollumns);
+            PlayerPrefs.Save();
+        }
+
+        private void CloseWindow()
+        {
+            _settingsWindow.gameObject.SetActive(false);
+            _startWindow.gameObject.SetActive(true);
+        }
+
+        public void StartTheGame()
+        {
+            _points.points = 0;
+            Time.timeScale = 1;
+            gameObject.GetComponent<SpawnBehaviour>().enabled = true;
+            gameObject.GetComponent<ClickMechanics>().enabled = true;
+            gameObject.GetComponent<TimeMechanics>().enabled = true;
+        }
+
+        public void StopTheGame()
+        {
+            _startWindow.SetHighScore(_points.points);
+            gameObject.GetComponent<SpawnBehaviour>().enabled = false;
+            gameObject.GetComponent<ClickMechanics>().enabled = false;
+            gameObject.GetComponent<TimeMechanics>().enabled = false;
+        }
+    
     }
 }

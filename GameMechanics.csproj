@@ -52,11 +52,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Game\MainMechanics.cs" />
+     <Compile Include="Assets\Scripts\Game\TimeMechanics.cs" />
      <Compile Include="Assets\Scripts\Game\InflateMechanics.cs" />
      <Compile Include="Assets\Scripts\Game\SpawnBehaviour.cs" />
      <Compile Include="Assets\Scripts\Game\ClickMechanics.cs" />
-     <Compile Include="Assets\Scripts\Game\TimeMechanics.cs" />
-     <Compile Include="Assets\Scripts\Game\MainMechanics.cs" />
      <None Include="Assets\Scripts\Game\GameMechanics.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -288,9 +288,6 @@
  </Reference>
  <Reference Include="UnityEditor.UWP.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
- <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Plastic.Antlr3.Runtime">
  <HintPath>C:/Users/Michael/Clicker/Library/PackageCache/com.unity.collab-proxy@1.5.7/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>

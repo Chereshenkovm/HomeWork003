@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameMechanics", "GameMechanics.csproj", "{0b802331-e250-4013-2be3-acf2cf9fdb58}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIMechanics", "UIMechanics.csproj", "{55b52654-126c-18cb-0497-68883d1d7010}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{45e8bba9-0aa6-b854-0492-d368bdf7e73a}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0b802331-e250-4013-2be3-acf2cf9fdb58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0b802331-e250-4013-2be3-acf2cf9fdb58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0b802331-e250-4013-2be3-acf2cf9fdb58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0b802331-e250-4013-2be3-acf2cf9fdb58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55b52654-126c-18cb-0497-68883d1d7010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55b52654-126c-18cb-0497-68883d1d7010}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55b52654-126c-18cb-0497-68883d1d7010}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55b52654-126c-18cb-0497-68883d1d7010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45e8bba9-0aa6-b854-0492-d368bdf7e73a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45e8bba9-0aa6-b854-0492-d368bdf7e73a}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45e8bba9-0aa6-b854-0492-d368bdf7e73a}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45e8bba9-0aa6-b854-0492-d368bdf7e73a}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
