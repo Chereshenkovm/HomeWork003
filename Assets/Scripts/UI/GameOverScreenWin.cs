@@ -1,14 +1,15 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameOverScreenWin : MonoBehaviour
 {
-    
+    [Header("Окно отображения набранных очков")]
     [SerializeField] private Text _score;
+    [Header("Кнопка возвращения в главное меню")]
     [SerializeField] private Button _button;
+    [Header("Таймер")]
     [SerializeField] private Text _time;
     public event Action SetPoints;
     public event Action OnClose;

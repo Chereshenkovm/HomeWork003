@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Game;
+using GameNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,18 +9,23 @@ public class UIPointsMechanics : MonoBehaviour
     public GameObject main;
 
     private Text score;
-    private Game.Points _mainPoints;
-
-    // Start is called before the first frame update
+    private GameNamespace.Points _mainPoints;
+    
     void Start()
     {
         _mainPoints = main.GetComponent<MainMechanics>()._points;
         score = GetComponent<Text>();
+
+        StartCoroutine(SetPoints());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SetPoints()
     {
-        score.text = _mainPoints.points.ToString();
+        while (true)
+        {
+            score.text = _mainPoints.points.ToString();
+            yield return new WaitForSeconds(0.2f);
+        }
     }
+
 }

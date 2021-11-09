@@ -4,8 +4,11 @@ using UnityEngine.UI;
 
 public class SettingsWindow : MonoBehaviour
 {
+    [Header("Поле для ввода времени игры")]
     [SerializeField] private InputField Time;
+    [Header("Выбор количества срок для игры в Циклопа")]
     [SerializeField] private Dropdown nRows;
+    [Header("Выбор количества столбиков для игры в Циклопа")]
     [SerializeField] private Dropdown nCols;
 
     public event Action CloseSet;

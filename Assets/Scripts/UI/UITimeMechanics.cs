@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class UITimeMechanics : MonoBehaviour
 {
     private Text _text;
     private TimeMechanics CM;
+    private IEnumerator cor;
 
     public GameObject main;
 
@@ -15,11 +17,21 @@ public class UITimeMechanics : MonoBehaviour
     {
         CM = main.GetComponent<TimeMechanics>();
         _text = GetComponent<Text>();
+        cor = Timer();
+        StartCoroutine(cor);
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Timer()
     {
-        _text.text = "Time: " + CM._time.ToString();
+        while (true)
+        {
+            _text.text = "Time: " + CM._time.ToString();
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        StopCoroutine(cor);
     }
 }
